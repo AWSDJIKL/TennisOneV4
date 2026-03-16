@@ -1,0 +1,1 @@
+python GCN/ensemble.py --dataset 'csv1' --joint-dir 'GCN/work_dir/j/'  --bone-dir 'GCN/work_dir/b/' --joint-motion-dir 'GCN/work_dir/jm/' --bone-motion-dir 'GCN/work_dir/bm/'
