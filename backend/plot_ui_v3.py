@@ -18,7 +18,7 @@ import gcn_test as gt
 
 device = "cuda"
 access_token = (
-    "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"  # 如果模型私有，需要填入访问token
+    "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"  # 如果模型私有，需要填入访问token
 )
 person_image_processor = AutoProcessor.from_pretrained(
     "PekingU/rtdetr_r50vd_coco_o365", token=access_token
@@ -829,7 +829,7 @@ def PlotAll(original_video_path, standard_video_path, standard_pose):
 
     out.release()
     print("Finished. Saved to output.mp4")
-    return problems, suggests
+    return scores[0], problems, suggests
 
 
 if __name__ == "__main__":

@@ -111,13 +111,13 @@ async def generate_report(payload: dict):
     video_url = str(BASE_DIR) + video_url
     print(video_url)
     if "Forehand" in action_name:
-        problems, suggests = puv3.PlotAll(
+        score, problems, suggests = puv3.PlotAll(
             video_url,
             "./standar_video/Federer/forehand_left/federer (1).mp4",
             "./backend/Federer_forehand_left_angles.npy",
         )
     else:
-        problems, suggests = puv3.PlotAll(
+        score, problems, suggests = puv3.PlotAll(
             video_url,
             "./standar_video/Federer/backhand_left/federer (1).mp4",
             "./backend/Federer_backhand_left_angles.npy",
@@ -137,7 +137,7 @@ async def generate_report(payload: dict):
     #         "建议": ["注意击球点提前", "保持身体重心稳定", "挥拍轨迹可以更流畅"],
     #     },
     # }
-    report = {"action": action_name, "问题": problems, "建议": suggests}
+    report = {"action": action_name, "score": score, "问题": problems, "建议": suggests}
 
     return {"ok": True, "report": report}
 

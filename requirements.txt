@@ -14,3 +14,4 @@ scikit-learn
 tqdm
 torchpack==0.0.13
 tensorboardX
+accelerate

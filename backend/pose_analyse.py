@@ -8,11 +8,11 @@ import tqdm
 from PIL import Image
 
 # import yolo.tennis_detector as td
-from transformers import (
-    AutoProcessor,
-    RTDetrForObjectDetection,
-    VitPoseForPoseEstimation,
-)
+# from transformers import (
+#     AutoProcessor,
+#     RTDetrForObjectDetection,
+#     VitPoseForPoseEstimation,
+# )
 import six
 
 device = "cuda"

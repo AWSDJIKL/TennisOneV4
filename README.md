@@ -10,7 +10,7 @@
 目前版本：开启网页端可以利用大恒相机实施捕捉网球击球动作，捕获后可生成击球动作切片并在动作时间线上显示。点击按钮可以对动作进行重放。点击分析按钮可以在后台生成分析报告视频。
 
 # 1. 安装
-1. 配置cuda，不再赘述
+1. 配置cuda,ffmpeg，不再赘述
 2. 创建虚拟环境并安装所需的库
 ```
 #由于要使用st-gcn，需要3.9的版本
@@ -21,7 +21,7 @@ conda activate tennisone
 # 若使用CUDA 12.8或更高版本，建议先安装torch
 pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 
-# 安装YOLO框架、vit-pose框架
+# 安装YOLO框架、vit-pose框架等其余框架
 pip install -r requirements.txt
 
 # 安装st-gcn相关的库
@@ -63,7 +63,7 @@ sudo python3 setup.py install
 
 # 2. 使用
 ```
-python plot_ui_v2.py
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000
 ```
 # 3. TODO
 - [√] 将大恒摄像头与sport-vision对接，并将骨骼识别模型改为YOLO11
