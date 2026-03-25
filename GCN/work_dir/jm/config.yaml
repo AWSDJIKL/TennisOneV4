@@ -1,4 +1,4 @@
-# command line: pipeline_by_vitpose_new.py --video_file ./video/hkgame4.mp4 --phase test
+# command line: /home/awsdjikl/anaconda3/envs/sp/lib/python3.9/site-packages/uvicorn/__main__.py backend.main:app --host 0.0.0.0 --port 8000
 
 base_lr: 0.05
 batch_size: 64
@@ -54,8 +54,8 @@ train_feeder_args:
   - 1
   vel: true
   window_size: 5
-video_file: ./video/hkgame4.mp4
+video_file: null
 warm_up_epoch: 5
 weight_decay: 0.0004
-weights: /home/awsdjikl/TrackNetV3/GCN/work_dir/jm/runs-65-1040.pt
-work_dir: /home/awsdjikl/TrackNetV3/GCN/work_dir/jm
+weights: ./GCN/work_dir/jm/runs-65-715.pt
+work_dir: ./GCN/work_dir/jm
