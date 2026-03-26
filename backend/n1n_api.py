@@ -64,7 +64,7 @@ def AnalyseVideo(video_path, problem_part):
                 "parts": [
                     {"inline_data": {"mime_type": "video/mp4", "data": video_base64}},
                     {
-                        "text": f"请用一句话总结这个击球动作中的问题，30字以内。并用另外一句话给出{problem_part}的改进建议，30字以内。两句话之间用|分隔开来。"
+                        "text": f"请用一句中文总结这个击球动作中的问题，30字以内。并用另外一句中文给出{problem_part}的改进建议，30字以内。两句话之间用|分隔开来。"
                     },
                 ],
             }

@@ -26,10 +26,10 @@ class ActionRecognizer:
     """
 
     ACTIONS = {
-        "forehand": {"name": "正手 Forehand", "icon": "➡️", "color": "#33ff88"},
-        "backhand": {"name": "反手 Backhand", "icon": "⬅️", "color": "#ffaa33"},
-        "ready": {"name": "其他 Other / 准备", "icon": "🧍", "color": "#888888"},
-        "moving": {"name": "移动 Moving", "icon": "🏃", "color": "#ffdd44"},
+        "forehand": {"name": "Forehand", "icon": "➡️", "color": "#33ff88"},
+        "backhand": {"name": "Backhand", "icon": "⬅️", "color": "#ffaa33"},
+        "ready": {"name": "Other / Ready", "icon": "🧍", "color": "#888888"},
+        "moving": {"name": "Moving", "icon": "🏃", "color": "#ffdd44"},
     }
 
     GCN_TO_ACTION = {0: "forehand", 1: "backhand", 2: "ready"}
