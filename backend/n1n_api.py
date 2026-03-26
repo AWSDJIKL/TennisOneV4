@@ -4,7 +4,9 @@ import json
 import time
 
 # ================= 配置区 =================
-API_KEY = "sk-3RQrU6rgMNt1RUSllV9U3t4gckjafLGq5fHkOLBqq0fKW2DG"
+with open("config.json", "r") as f:
+    config = json.load(f)
+API_KEY = config.get("n1n_api_key")
 URL = "https://api.n1n.ai/v1beta/models/gemini-3.1-pro-preview:generateContent"
 # video_path = "game3.mp4"  # 替换成你的视频文件路径
 # ==========================================

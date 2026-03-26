@@ -1,3 +1,4 @@
+import json
 import os
 import time
 import torch
@@ -16,10 +17,10 @@ import backend.pose_analyse as pa
 import backend.n1n_api
 import gcn_test as gt
 
+with open("config.json", "r") as f:
+    config = json.load(f)
 device = "cuda"
-access_token = (
-    "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"  # 如果模型私有，需要填入访问token
-)
+access_token = config.get("huggingface_token")
 person_image_processor = AutoProcessor.from_pretrained(
     "PekingU/rtdetr_r50vd_coco_o365", token=access_token
 )
@@ -829,7 +830,7 @@ def PlotAll(original_video_path, standard_video_path, standard_pose):
 
     out.release()
     print("Finished. Saved to output.mp4")
-    return scores[0], problems, suggests
+    return hex_vals, problems, suggests
 
 
 if __name__ == "__main__":

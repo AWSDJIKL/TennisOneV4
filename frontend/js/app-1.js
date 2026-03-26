@@ -391,7 +391,7 @@
         videoModal.innerHTML = `
             <div style="
                 position: relative;
-                width: min(1040px, 94vw);
+                width: min(960px, 94vw);
                 max-height: 90vh;
                 background: #0b1220;
                 border: 1px solid rgba(255,255,255,0.12);
@@ -441,7 +441,7 @@
 
                 <video id="video-player" controls playsinline autoplay style="
                     width: 100%;
-                    max-height: 42vh;
+                    max-height: 54vh;
                     border-radius: 12px;
                     background: black;
                     display: block;
@@ -465,10 +465,18 @@
                     line-height:1.6;
                 "></div>
 
-                <div id="report-result" style="
+                <pre id="report-result" style="
                     display:none;
                     margin-top:12px;
-                "></div>
+                    padding:12px;
+                    border-radius:12px;
+                    background: rgba(255,255,255,0.05);
+                    color:#dbeafe;
+                    font-size:13px;
+                    line-height:1.6;
+                    white-space:pre-wrap;
+                    word-break:break-word;
+                "></pre>
             </div>
         `;
 
@@ -504,7 +512,7 @@
 
                 if (reportResult) {
                     reportResult.style.display = 'none';
-                    reportResult.innerHTML = '';
+                    reportResult.textContent = '';
                 }
 
                 try {
@@ -518,7 +526,7 @@
 
                     if (reportResult) {
                         reportResult.style.display = 'block';
-                        renderAnalysisReport(reportResult, result.report || {});
+                        reportResult.textContent = JSON.stringify(result, null, 2);
                     }
                 } catch (err) {
                     console.error('report request error:', err);
@@ -556,227 +564,7 @@
             playPromise.catch((err) => {
                 console.warn('video autoplay blocked or failed:', err);
             });
-        };
-    }
-
-    function renderAnalysisReport(container, report) {
-        const labels = ['动作标准性', '肘部', '手腕', '姿态稳定性', '躯干', '膝部'];
-        const scores = normalizeScores(report.score, labels.length);
-        const radarSvg = buildRadarSvg(scores, labels);
-
-        container.innerHTML = `
-            <div style="
-                display:grid;
-                grid-template-columns: minmax(280px, 360px) 1fr;
-                gap:16px;
-                align-items:start;
-            ">
-                <div style="
-                    background: rgba(255,255,255,0.04);
-                    border: 1px solid rgba(255,255,255,0.08);
-                    border-radius: 14px;
-                    padding: 16px;
-                ">
-                    <div style="
-                        color:#fff;
-                        font-weight:700;
-                        margin-bottom:12px;
-                        font-size:15px;
-                    ">
-                        ${escapeHtml(report.action || '动作分析')}
-                    </div>
-
-                    <div style="
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        margin-bottom:12px;
-                    ">
-                        ${radarSvg}
-                    </div>
-
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        ${labels.map((label, index) => {
-                            const value = scores[index];
-                            return `
-                                <div>
-                                    <div style="
-                                        display:flex;
-                                        justify-content:space-between;
-                                        font-size:13px;
-                                        color:rgba(255,255,255,0.82);
-                                        margin-bottom:4px;
-                                    ">
-                                        <span>${label}</span>
-                                        <span>${value}</span>
-                                    </div>
-                                    <div style="
-                                        height:8px;
-                                        background: rgba(255,255,255,0.08);
-                                        border-radius: 999px;
-                                        overflow:hidden;
-                                    ">
-                                        <div style="
-                                            width:${value}%;
-                                            height:100%;
-                                            background: linear-gradient(90deg, #00f0ff, #3366ff);
-                                            border-radius:999px;
-                                        "></div>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                </div>
-
-                <div style="
-                    display:flex;
-                    flex-direction:column;
-                    gap:16px;
-                ">
-                    <div style="
-                        background: rgba(255,255,255,0.04);
-                        border: 1px solid rgba(255,255,255,0.08);
-                        border-radius: 14px;
-                        padding: 16px;
-                    ">
-                        <div style="
-                            color:#fff;
-                            font-weight:700;
-                            margin-bottom:8px;
-                        ">问题</div>
-                        <div style="
-                            color:rgba(255,255,255,0.82);
-                            font-size:14px;
-                            line-height:1.7;
-                            white-space:pre-wrap;
-                            word-break:break-word;
-                        ">${escapeHtml(report['问题'] || '暂无')}</div>
-                    </div>
-
-                    <div style="
-                        background: rgba(255,255,255,0.04);
-                        border: 1px solid rgba(255,255,255,0.08);
-                        border-radius: 14px;
-                        padding: 16px;
-                    ">
-                        <div style="
-                            color:#fff;
-                            font-weight:700;
-                            margin-bottom:8px;
-                        ">建议</div>
-                        <div style="
-                            color:rgba(255,255,255,0.82);
-                            font-size:14px;
-                            line-height:1.7;
-                            white-space:pre-wrap;
-                            word-break:break-word;
-                        ">${escapeHtml(report['建议'] || '暂无')}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function normalizeScores(scoreValue, expectedLength) {
-        if (Array.isArray(scoreValue)) {
-            return scoreValue
-                .slice(0, expectedLength)
-                .map(v => clampScore(v))
-                .concat(Array(Math.max(0, expectedLength - scoreValue.length)).fill(0));
         }
-
-        return Array(expectedLength).fill(0);
-    }
-
-    function clampScore(value) {
-        const n = Number(value);
-        if (!Number.isFinite(n)) return 0;
-        return Math.max(0, Math.min(100, Math.round(n)));
-    }
-
-    function buildRadarSvg(scores, labels) {
-        const size = 260;
-        const cx = 130;
-        const cy = 130;
-        const maxRadius = 82;
-        const rings = [20, 40, 60, 80, 100];
-
-        const angleFor = (i) => (-Math.PI / 2) + (i * Math.PI * 2 / 6);
-
-        const pointFor = (score, i) => {
-            const angle = angleFor(i);
-            const radius = (score / 100) * maxRadius;
-            const x = cx + Math.cos(angle) * radius;
-            const y = cy + Math.sin(angle) * radius;
-            return [x, y];
-        };
-
-        const polygonPoints = scores.map((score, i) => pointFor(score, i).join(',')).join(' ');
-
-        const ringPolygons = rings.map(level => {
-            const radius = (level / 100) * maxRadius;
-            const pts = labels.map((_, i) => {
-                const angle = angleFor(i);
-                const x = cx + Math.cos(angle) * radius;
-                const y = cy + Math.sin(angle) * radius;
-                return `${x},${y}`;
-            }).join(' ');
-            return `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" />`;
-        }).join('');
-
-        const axisLines = labels.map((_, i) => {
-            const angle = angleFor(i);
-            const x = cx + Math.cos(angle) * maxRadius;
-            const y = cy + Math.sin(angle) * maxRadius;
-            return `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,0.12)" stroke-width="1" />`;
-        }).join('');
-
-        const labelNodes = labels.map((label, i) => {
-            const angle = angleFor(i);
-            const labelRadius = maxRadius + 28;
-            const x = cx + Math.cos(angle) * labelRadius;
-            const y = cy + Math.sin(angle) * labelRadius;
-            return `
-                <text
-                    x="${x}"
-                    y="${y}"
-                    fill="rgba(255,255,255,0.8)"
-                    font-size="12"
-                    text-anchor="middle"
-                    dominant-baseline="middle"
-                >${label}</text>
-            `;
-        }).join('');
-
-        const pointDots = scores.map((score, i) => {
-            const [x, y] = pointFor(score, i);
-            return `<circle cx="${x}" cy="${y}" r="3.5" fill="#00f0ff" />`;
-        }).join('');
-
-        return `
-            <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="六维分析雷达图">
-                ${ringPolygons}
-                ${axisLines}
-                <polygon
-                    points="${polygonPoints}"
-                    fill="rgba(0,240,255,0.22)"
-                    stroke="#00f0ff"
-                    stroke-width="2"
-                />
-                ${pointDots}
-                ${labelNodes}
-            </svg>
-        `;
-    }
-
-    function escapeHtml(value) {
-        return String(value ?? '')
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
     }
 
     function closeVideoModal() {
