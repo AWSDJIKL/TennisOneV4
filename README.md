@@ -49,7 +49,7 @@ unzip Galaxy_Linux_Python_2.4.2503.9202.zip
 cd ./Galaxy_Linux_Python_2.4.2503.9202/Galaxy_Linux_Python_2.4.2503.9202/api
 
 python3 setup.py build
-sudo python3 setup.py install
+python3 setup.py install
 ```
 
 4. 若在WSL中使用，注意WSL无法直接读取USB设备，因此需要额外安装[usbipd工具](https://github.com/dorssel/usbipd-win/releases/download/v5.3.0/usbipd-win_5.3.0_x64.msi)

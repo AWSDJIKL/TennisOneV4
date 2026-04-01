@@ -66,3 +66,7 @@
 [ Thu Mar 26 11:35:15 2026 ] using warm up, epoch: 5
 [ Thu Mar 26 11:37:36 2026 ] Load weights from ./GCN/work_dir/b/runs-65-715.pt.
 [ Thu Mar 26 11:37:36 2026 ] using warm up, epoch: 5
+[ Mon Mar 30 23:12:16 2026 ] Load weights from ./GCN/work_dir/b/runs-65-715.pt.
+[ Mon Mar 30 23:12:16 2026 ] using warm up, epoch: 5
+[ Mon Mar 30 23:42:11 2026 ] Load weights from ./GCN/work_dir/b/runs-65-715.pt.
+[ Mon Mar 30 23:42:11 2026 ] using warm up, epoch: 5
